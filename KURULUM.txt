@@ -1,0 +1,17 @@
+MINIK ZIHIN ULTRA - KURULUM
+
+1) Bu paketteki index.html, manifest.webmanifest, sw.js, icon-192.png ve icon-512.png dosyalarini mevcut MinikZihin klasorune kopyalayin.
+2) Var olan index.html dosyasini degistirmeden once index-yedek.html olarak yedekleyin.
+3) Hayvan ses dosyalarinizi silmeyin; asagidaki dosyalar yeni index.html ile ayni klasorde kalmali:
+   Barking_of_a_dog_2.ogg
+   cow-moo-02.mp3
+   duck-quack-02.mp3
+   Meow.ogg
+   rooster-crow-02.mp3
+4) Uygulamayi ayri pencere halinde acmak icin MinikZihin-Uygulama.bat dosyasini MinikZihin klasorune de kopyalayin ve cift tiklayin.
+   Edge kuruluysa uygulama adres cubugu olmadan acilmaya calisir. Degilse normal tarayici acilir.
+5) Eski sunucu CMD penceresi aciksa once Ctrl+C ile durdurun; sonra yeni .bat dosyasini acin.
+6) Arka plan melodisi otomatik baslamaz. Uygulamada "Sesi ac" tusuna basarak baslatabilir ve "Sesi kapat" ile durdurabilirsiniz.
+7) Ilk acilista internet gerekmez; ancak uygulama bir kez localhost uzerinden acilmis olmali ki offline onbellegi olussun.
+
+Not: Puan/yildiz degerleri mevcut minikZihinPoints, minikZihinStars ve minikZihinProgressV2 anahtarlarindan okunur. file:// ve localhost tarayici depolari birbirinden ayri olabileceginden eski ilerleme otomatik gorunmeyebilir.
