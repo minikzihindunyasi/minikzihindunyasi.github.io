@@ -39,7 +39,7 @@ footer{text-align:center;color:#8b86a7;font-size:12px;font-weight:750;padding:24
   <div class="brand"><div class="logo">🧠</div><div><h1>Minik Zihin</h1><p>Minik Kaşifler Kulübü ✨</p></div></div>
   <div class="top-actions">
     <div class="pill" aria-label="Toplam yıldız"><span>⭐</span><span id="starTop">0</span></div>
-    <div class="pill" aria-label="Puan"><span>🏆</span><span id="pointsTop">0 puan</span></div>
+        <div class="pill" aria-label="Puan"><span>🏆</span><span id="pointsTop">0 puan</span></div>
     <button class="sound-btn" id="soundToggle" aria-pressed="false" title="Arka plan sesini aç veya kapat">🎵 Sesi aç</button>
   </div>
 </header>
@@ -111,54 +111,327 @@ function renderGames(filter="all"){$("#games").innerHTML=gamesList.filter(g=>fil
 function rand(n){return Math.floor(Math.random()*n)}
 function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
 const colorData=[["Kırmızı","🔴"],["Mavi","🔵"],["Sarı","🟡"],["Yeşil","🟢"],["Mor","🟣"],["Turuncu","🟠"],["Pembe","🩷"],["Kahverengi","🟤"],["Siyah","⚫"],["Beyaz","⚪"]];
-const letterData=[["A","Arı","🐝"],["B","Balık","🐟"],["C","Civciv","🐥"],["Ç","Çilek","🍓"],["D","Dondurma","🍦"],["E","Elma","🍎"],["F","Fil","🐘"],["G","Güneş","☀️"],["H","Horoz","🐓"],["I","Işık","💡"],["İ","İnek","🐮"],["K","Kedi","🐱"],["L","Limon","🍋"],["M","Muz","🍌"],["N","Nar","🍎"],["O","Ok","🏹"],["Ö","Ördek","🦆"],["P","Penguen","🐧"],["R","Roket","🚀"],["S","Su","💧"],["Ş","Şemsiye","☂️"],["T","Tavşan","🐰"],["U","Uçak","✈️"],["Ü","Üzüm","🍇"],["Y","Yıldız","⭐"],["Z","Zebra","🦓"]];
+const letterData=[["A","Arı","🐝"],["B","Balık","🐟"],["C","Civciv","🐥"],["Ç","Çilek","🍓"],["D","Dondurma","🍦"],["E","Elma","🍎"],["F","Fil","🐘"],["G","Güneş","☀️"],["H","Horoz","🐓"],["I","Işık","💡"],["İ","İnek","🐮"],["K","Kedi","🐱"],["L","Limon","🍋"],["M","Muz","🍌"],["N","Nane","🌿"],["O","Ok","🏹"],["Ö","Ördek","🦆"],["P","Penguen","🐧"],["R","Roket","🚀"],["S","Su","💧"],["Ş","Şemsiye","☂️"],["T","Tavşan","🐰"],["U","Uçak","✈️"],["Ü","Üzüm","🍇"],["Y","Yıldız","⭐"],["Z","Zebra","🦓"]];
 const shapeData=[["Daire","🔴"],["Kare","🟦"],["Üçgen","🔺"],["Dikdörtgen","🟪"],["Yıldız","⭐"],["Kalp","❤️"],["Elips","🥚"],["Beşgen","⬟"]];
-const wordData=[["Elma","🍎"],["Muz","🍌"],["Araba","🚗"],["Güneş","☀️"],["Balık","🐟"],["Kitap","📚"],["Çiçek","🌷"],["Top","⚽"],["Uçak","✈️"],["Kelebek","🦋"],["Pasta","🎂"],["Ay","🌙"],["Bulut","☁️"],["Tavşan","🐰"],["Havuç","🥕"],["Ev","🏠"],["Ağaç","🌳"],["Kalp","❤️"],["Yıldız","⭐"],["Şemsiye","☂️"]];
-const natureData=[
- {q:"Bitkilerin büyümesi için hangisi gerekir?",a:"Su",e:"💧",opts:["Su","Oyuncak","Ayakkabı","Televizyon"]},
- {q:"Gündüz gökyüzünde genellikle ne görürüz?",a:"Güneş",e:"☀️",opts:["Güneş","Kar tanesi","Penguen","Yastık"]},
- {q:"Yağmur yağarken ne kullanabiliriz?",a:"Şemsiye",e:"☂️",opts:["Şemsiye","Güneş gözlüğü","Yorgan","Tarak"]},
- {q:"Kışın hava genellikle nasıldır?",a:"Soğuk",e:"❄️",opts:["Soğuk","Çok sıcak","Her zaman kuru","Ateşli"]},
- {q:"Arılar bize hangi yiyeceği yapmaya yardım eder?",a:"Bal",e:"🐝",opts:["Bal","Ekmek","Peynir","Makarna"]},
- {q:"Bitkiler genellikle nerede büyür?",a:"Toprakta",e:"🌱",opts:["Toprakta","Bulutun üstünde","Dolapta","Denizin içinde"]},
- {q:"Gökkuşağını ne zaman görebiliriz?",a:"Yağmur ve güneş bir aradayken",e:"🌈",opts:["Yağmur ve güneş bir aradayken","Sadece gece","Buzdolabında","Yastığın altında"]},
- {q:"Sonbaharda ağaç yaprakları ne yapabilir?",a:"Dökülebilir",e:"🍂",opts:["Dökülebilir","Şarkı söyler","Mavi olur hep","Balık olur"]}
+  const patternData=[
+ {q:"🔴 🔵 🔴 🔵 ❓",a:"🔴",opts:["🔴","🟢","⭐","🔺"]},
+ {q:"⭐ 🌙 ⭐ 🌙 ❓",a:"⭐",opts:["🌙","⭐","❤️","☀️"]},
+ {q:"🐱 🐶 🐱 🐶 ❓",a:"🐱",opts:["🐶","🐱","🐮","🐸"]},
+ {q:"🟡 🟡 🔵 🟡 🟡 ❓",a:"🔵",opts:["🔵","🟡","🔴","🟢"]},
+ {q:"🍎 🍌 🍎 🍌 ❓",a:"🍎",opts:["🍌","🍎","🍇","🍓"]},
+ {q:"🔺 🟦 🔺 🟦 ❓",a:"🔺",opts:["🟦","🔺","🔴","⭐"]}
 ];
-function qObj(q,display,correct,opts){return {q,display,a:correct,opts:shuffle([...new Set([correct,...opts])]).slice(0,4)}}
-function makeQuestions(id){
- let qs=[];
- if(id==="colors"){for(let i=0;i<16;i++){let c=colorData[rand(colorData.length)];qs.push(qObj("Bu hangi renk?",c[1],c[0],shuffle(colorData.filter(x=>x[0]!==c[0]).map(x=>x[0])).slice(0,3)))}
- }else if(id==="letters"){for(let i=0;i<16;i++){let l=letterData[rand(letterData.length)];let mode=rand(2);qs.push(mode?qObj("Bu kelime hangi harfle başlıyor?",l[2]+"  "+l[1],l[0],shuffle(letterData.filter(x=>x[0]!==l[0]).map(x=>x[0])).slice(0,3)):qObj("Hangi kelime "+l[0]+" harfiyle başlar?",l[0],l[1],shuffle(letterData.filter(x=>x[1]!==l[1]).map(x=>x[1])).slice(0,3)))}
- }else if(id==="shapes"){for(let i=0;i<16;i++){let s=shapeData[rand(shapeData.length)];qs.push(qObj("Bu şeklin adı nedir?",s[1],s[0],shuffle(shapeData.filter(x=>x[0]!==s[0]).map(x=>x[0])).slice(0,3)))}
- }else if(id==="numbers"){for(let i=0;i<18;i++){let mode=rand(4);if(mode===0){let n=1+rand(10);qs.push(qObj("Kaç tane var?",Array.from({length:n},()=>["🍓","⭐","🐣","🍎"][rand(4)]).join(" "),String(n),shuffle(Array.from({length:10},(_,j)=>String(j+1)).filter(x=>x!==String(n))).slice(0,3)))}else{let a=1+rand(10),b=1+rand(9),op=rand(2)?" + ":" − ",ans=op.includes("+")?a+b:Math.max(a,b)-Math.min(a,b);let expr=op.includes("+")?`${a} + ${b} = ?`:`${Math.max(a,b)} − ${Math.min(a,b)} = ?`;qs.push(qObj("Sonuç kaçtır?",expr,String(ans),shuffle(Array.from({length:19},(_,j)=>String(j+1)).filter(x=>x!==String(ans))).slice(0,3)))}}
- }else if(id==="patterns"){const seqs=[{s:["🔴","🔵","🔴","🔵","❓"],a:"🔴",o:["🔵","🟡","🟢"]},{s:["⭐","⭐","🌙","⭐","⭐","🌙","❓"],a:"⭐",o:["🌙","☀️","❤️"]},{s:["🐱","🐶","🐱","🐶","❓"],a:"🐱",o:["🐶","🐰","🐻"]},{s:["🟡","🟡","🟢","🟡","🟡","🟢","❓"],a:"🟡",o:["🟢","🔵","🔴"]},{s:["🍎","🍌","🍇","🍎","🍌","❓"],a:"🍇",o:["🍎","🍌","🍓"]},{s:["🔺","🟦","🔺","🟦","❓"],a:"🔺",o:["🟦","⭐","⚪"]}];for(let i=0;i<16;i++){let s=seqs[rand(seqs.length)];qs.push(qObj("Sırada hangisi gelmeli?",s.s.join(" "),s.a,s.o))}
- }else if(id==="bigsmall"){for(let i=0;i<16;i++){let pairs=[["🐘","🐜","Fil","Karınca"],["🐋","🐠","Balina","Balık"],["🦒","🐢","Zürafa","Kaplumbağa"],["🏠","🐞","Ev","Uğur böceği"],["🚌","🚲","Otobüs","Bisiklet"],["🌳","🌱","Ağaç","Fide"],["🐻","🐭","Ayı","Fare"],["🍉","🍒","Karpuz","Kiraz"]];let p=pairs[rand(pairs.length)];let big=rand(2)===0;qs.push(qObj("Hangisi daha büyük?",p[0]+"     "+p[1],big?p[2]:p[3],[big?p[3]:p[2],p[2]=== "Fil"?"Balina":"Ev","Karınca"].filter(x=>x!==(big?p[2]:p[3])).slice(0,3)))} 
- }else if(id==="words"){for(let i=0;i<18;i++){let w=wordData[rand(wordData.length)];qs.push(qObj("Bu resmin adı nedir?",w[1],w[0],shuffle(wordData.filter(x=>x[0]!==w[0]).map(x=>x[0])).slice(0,3)))}
- }else if(id==="nature"){for(let i=0;i<16;i++){let n=natureData[rand(natureData.length)];qs.push(qObj(n.q,n.e,n.a,shuffle(n.opts.filter(x=>x!==n.a)).slice(0,3)))}
+const wordData=[
+ {q:"🍎",a:"Elma",opts:["Elma","Armut","Muz","Üzüm"]},
+ {q:"🐱",a:"Kedi",opts:["Köpek","Kedi","İnek","At"]},
+ {q:"🚗",a:"Araba",opts:["Uçak","Gemi","Araba","Bisiklet"]},
+ {q:"☀️",a:"Güneş",opts:["Ay","Güneş","Yıldız","Bulut"]},
+ {q:"🐟",a:"Balık",opts:["Balık","Kuş","Kedi","Tavşan"]},
+ {q:"🍌",a:"Muz",opts:["Elma","Muz","Çilek","Kiraz"]},
+ {q:"🏠",a:"Ev",opts:["Okul","Ev","Park","Market"]},
+ {q:"🌳",a:"Ağaç",opts:["Çiçek","Ağaç","Bulut","Dağ"]}
+];
+const natureData=[
+ {q:"Yağmur yağarken ne kullanırız?",a:"Şemsiye",opts:["Şemsiye","Güneş gözlüğü","Yelpaze","Atkı"]},
+ {q:"Bitkilerin büyümesi için hangisi gerekir?",a:"Su",opts:["Su","Plastik","Taş","Oyuncak"]},
+ {q:"Gece gökyüzünde genellikle ne görürüz?",a:"Ay ve yıldızlar",opts:["Ay ve yıldızlar","Gökkuşağı","Güneş","Çiçekler"]},
+ {q:"Hangi mevsimde kar yağabilir?",a:"Kış",opts:["Yaz","Kış","İlkbahar","Sonbahar"]},
+ {q:"Ağaçların yaprakları çoğunlukla hangi mevsimde dökülür?",a:"Sonbahar",opts:["Yaz","İlkbahar","Sonbahar","Kış"]},
+ {q:"Gündüz ortalığı aydınlatan nedir?",a:"Güneş",opts:["Ay","Güneş","Yıldız","Lamba"]}
+];
+function makeQuestion(id){
+ if(id==="colors"){
+  const item=colorData[rand(colorData.length)];
+  return {q:"Bu hangi renk?",big:item[1],a:item[0],opts:shuffle([item[0],...shuffle(colorData.filter(x=>x[0]!==item[0])).slice(0,3).map(x=>x[0])])};
  }
- return shuffle(qs).slice(0,10);
+ if(id==="numbers"){
+  const kind=rand(3);
+  if(kind===0){const n=rand(10)+1;return {q:"Kaç tane var?",big:["🍎","⭐","🐥","⚽"][rand(4)].repeat(n),a:String(n),opts:shuffle([String(n),String(n+1),String(Math.max(1,n-1)),String(rand(10)+1)]).filter((v,i,a)=>a.indexOf(v)===i).slice(0,4)}}
+  const a=rand(10)+1,b=rand(9)+1,sum=kind===1?a+b:Math.max(a,b)-Math.min(a,b);
+  return {q:kind===1?"Toplama işlemini yap!":"Çıkarma işlemini yap!",big:kind===1?`${a} + ${b} = ?`:`${Math.max(a,b)} − ${Math.min(a,b)} = ?`,a:String(sum),opts:shuffle([String(sum),String(sum+1),String(Math.max(0,sum-1)),String(sum+2)]).slice(0,4)};
+ }
+ if(id==="letters"){
+  const item=letterData[rand(letterData.length)];
+  return {q:`"${item[1]}" kelimesi hangi harfle başlar?`,big:item[2],a:item[0],opts:shuffle([item[0],...shuffle(letterData.filter(x=>x[0]!==item[0])).slice(0,3).map(x=>x[0])])};
+ }
+ if(id==="shapes"){
+  const item=shapeData[rand(shapeData.length)];
+  return {q:"Bu şeklin adı nedir?",big:item[1],a:item[0],opts:shuffle([item[0],...shuffle(shapeData.filter(x=>x[0]!==item[0])).slice(0,3).map(x=>x[0])])};
+ }
+ if(id==="patterns"){
+  const item=patternData[rand(patternData.length)];
+  return {q:"Deseni tamamla!",big:item.q,a:item.a,opts:shuffle(item.opts)};
+ }
+ if(id==="bigsmall"){
+  const pairs=[
+   {small:"🐭",large:"🐘",smallName:"Fare",largeName:"Fil"},
+   {small:"🐜",large:"🐻",smallName:"Karınca",largeName:"Ayı"},
+   {small:"🐤",large:"🦒",smallName:"Civciv",largeName:"Zürafa"},
+   {small:"🐸",large:"🦛",smallName:"Kurbağa",largeName:"Su aygırı"},
+   {small:"🐰",large:"🐳",smallName:"Tavşan",largeName:"Balina"},
+   {small:"🐞",large:"🦏",smallName:"Uğur böceği",largeName:"Gergedan"}
+  ];
+  const p=pairs[rand(pairs.length)];
+  const askLarge=Math.random()<.5;
+  const correct=askLarge?p.largeName:p.smallName;
+  const wrong=askLarge?p.smallName:p.largeName;
+  const otherNames=pairs.flatMap(x=>[x.smallName,x.largeName]).filter(x=>x!==correct&&x!==wrong);
+  return {q:askLarge?"Hangisi daha büyük?":"Hangisi daha küçük?",big:`${p.small}   ${p.large}`,a:correct,opts:shuffle([correct,wrong,...shuffle(otherNames).slice(0,2)])};
+ }
+ if(id==="words"){
+  const item=wordData[rand(wordData.length)];
+  return {q:"Bu resmin adı nedir?",big:item.q,a:item.a,opts:shuffle(item.opts)};
+ }
+ if(id==="nature"){
+  const item=natureData[rand(natureData.length)];
+  return {q:item.q,a:item.a,opts:shuffle(item.opts)};
+ }
+ return {q:"Doğru cevabı seç!",big:"⭐",a:"Yıldız",opts:shuffle(["Yıldız","Ay","Güneş","Bulut"])};
 }
-function openModal(title,subtitle){$("#modalTitle").textContent=title;$("#modalSubtitle").textContent=subtitle;$("#overlay").classList.add("show");$("#playArea").innerHTML="";$("#playArea").focus?.()}
-function closeModal(){$("#overlay").classList.remove("show");currentGame=null;memoryState=null}
-$("#closeModal").addEventListener("click",closeModal);$("#overlay").addEventListener("click",e=>{if(e.target===$("#overlay"))closeModal()});document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
-function startGame(id){currentGame=gamesList.find(g=>g.id===id);if(!currentGame)return;if(currentGame.type==="memory"){startMemory();return}if(currentGame.type==="animals"){startAnimals();return}questions=makeQuestions(id);qIndex=0;correctCount=0;sessionPoints=0;sessionStars=0;openModal(currentGame.emoji+" "+currentGame.name,"Her doğru cevapta puan ve yıldız kazanırsın!");showQuestion()}
-function showQuestion(){answered=false;let q=questions[qIndex];$("#playArea").innerHTML=`<div class="question-count"><span>Soru ${qIndex+1} / ${questions.length}</span><span>⭐ ${sessionStars} bu tur</span></div><div class="qbar"><span style="width:${qIndex/questions.length*100}%"></span></div><div class="question">${q.display?`<span class="big">${q.display}</span>`:""}${q.q}</div><div class="answers">${shuffle(q.opts).map(o=>`<button class="answer" data-answer="${escapeHtml(o)}">${o}</button>`).join("")}</div><div class="feedback" id="feedback" aria-live="polite">Cevabını seç bakalım! 🌟</div><div class="modal-actions"><button class="secondary" id="quitGame">🏡 Oyunlardan çık</button><button class="next" id="nextQ" disabled>${qIndex===questions.length-1?"Sonucu gör 🎉":"Sonraki soru →"}</button></div>`;document.querySelectorAll("[data-answer]").forEach(b=>b.addEventListener("click",()=>answerQuestion(b,b.dataset.answer,q.a)));$("#quitGame").addEventListener("click",closeModal);$("#nextQ").addEventListener("click",()=>{if(!answered)return;qIndex++;if(qIndex>=questions.length)finishQuiz();else showQuestion()})}
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function answerQuestion(btn,value,correct){if(answered)return;answered=true;let all=[...document.querySelectorAll("[data-answer]")];all.forEach(b=>{b.disabled=true;if(b.dataset.answer===correct)b.classList.add("correct")});let good=value===correct;if(good){correctCount++;sessionPoints+=10;sessionStars+=1;points+=10;stars+=1;$("#feedback").textContent=["Harikasın! 🎉","Süper cevap! 🌟","Bravo minik kaşif! 💖","Bunu bildin! 🥳"][rand(4)];confetti(12)}else{$( "#feedback").textContent="Güzel deneme! Doğru cevap: "+correct+" 💜";btn.classList.add("wrong")}save();$("#nextQ").disabled=false;$("#nextQ").textContent=qIndex===questions.length-1?"Sonucu gör 🎉":"Sonraki soru →";$("#playArea .qbar span").style.width=((qIndex+1)/questions.length*100)+"%"}
-function finishQuiz(){progress[currentGame.id]=(progress[currentGame.id]||0)+correctCount;save();const msg=correctCount>=8?"Muhteşem! Gerçek bir yıldızsın!":correctCount>=5?"Çok güzel gidiyorsun! Biraz daha keşfet!":"Her deneme yeni bir öğrenme! Bir tur daha deneyebilirsin.";$("#playArea").innerHTML=`<div class="result"><div class="result-emoji">${correctCount>=8?"🏆":correctCount>=5?"🌈":"🌱"}</div><h2>${correctCount>=8?"Harika iş çıkardın!":"Aferin minik kaşif!"}</h2><p>${msg}</p><div class="result-score">🎯 ${correctCount} / ${questions.length} doğru<br>⭐ +${sessionStars} yıldız · 🏅 +${sessionPoints} puan</div><div class="modal-actions" style="justify-content:center"><button class="secondary" id="homeBtn">🏡 Oyun bahçesi</button><button class="next" id="againBtn">🔁 Yeniden oyna</button></div></div>`;$("#homeBtn").addEventListener("click",closeModal);$("#againBtn").addEventListener("click",()=>startGame(currentGame.id));if(correctCount>=5)confetti(35)}
-function startAnimals(){openModal("🐾 Hayvan Dostlarım","Bir hayvana dokun, adını ve sesini keşfet!");$("#playArea").innerHTML=`<p style="text-align:center;color:var(--muted);font-weight:750">Hayvanlara dokunarak seslerini dinleyebilirsin. Ses dosyaları klasöründeyse gerçek sesler çalar. 🔊</p><div class="answers">${animals.map(a=>`<button class="answer animal-btn" data-animal="${a.name}"><span style="display:block;font-size:46px;margin-bottom:8px">${a.emoji}</span>${a.name}<small style="display:block;color:#777494;margin-top:4px">${a.sound}</small></button>`).join("")}</div><div class="feedback" id="animalFeedback">Hangi hayvanı dinlemek istersin? 🐥</div><div class="modal-actions"><button class="secondary" id="animalHome">🏡 Oyun bahçesi</button><button class="next" id="animalQuiz">🎯 Hayvan soruları</button></div>`;document.querySelectorAll("[data-animal]").forEach(b=>b.addEventListener("click",()=>{const a=animals.find(x=>x.name===b.dataset.animal);playAnimal(a);$("#animalFeedback").textContent=a.emoji+" "+a.name+" diyor ki: "+a.sound;points+=2;save()}));$("#animalHome").addEventListener("click",closeModal);$("#animalQuiz").addEventListener("click",()=>{currentGame=gamesList.find(g=>g.id==="animals");questions=Array.from({length:10},()=>{let a=animals[rand(animals.length)];return qObj("Bu hangi hayvan?",a.emoji,a.name,shuffle(animals.filter(x=>x.name!==a.name).map(x=>x.name)).slice(0,3))});qIndex=0;correctCount=0;sessionPoints=0;sessionStars=0;showQuestion()})}
-function playAnimal(a){try{const audio=new Audio(a.file);audio.volume=.8;audio.play().catch(()=>speak(a.name+" "+a.sound))}catch(e){speak(a.name+" "+a.sound)}}
-function speak(text){if("speechSynthesis"in window){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.lang="tr-TR";u.rate=.85;speechSynthesis.speak(u)}}
-function startMemory(){currentGame=gamesList.find(g=>g.id==="memory");let icons=shuffle(["🐶","🐱","🦊","🐼","🐸","🐵","🐰","🦄"]).slice(0,6);let deck=shuffle([...icons,...icons]).map((v,i)=>({v,i,open:false,matched:false}));memoryState={deck,opened:[],moves:0,matched:0,lock:false};openModal("🧠 Hafıza Ormanı","Aynı iki resmi bul. Bakalım kaç hamlede bitireceksin!");renderMemory()}
-function renderMemory(){const m=memoryState;$("#playArea").innerHTML=`<div class="question-count"><span>Hamle: ${m.moves}</span><span>Eşleşme: ${m.matched}/6</span></div><div class="memory-grid">${m.deck.map(c=>`<button class="memory-card ${c.open?"open":""} ${c.matched?"matched":""}" data-card="${c.i}" aria-label="Hafıza kartı">${c.open||c.matched?c.v:"❔"}</button>`).join("")}</div><div class="feedback" id="memoryFeedback">Eşleşen hayvanları bul! 🌟</div><div class="modal-actions"><button class="secondary" id="memoryHome">🏡 Oyun bahçesi</button><button class="next" id="memoryAgain">🔁 Yeniden karıştır</button></div>`;document.querySelectorAll("[data-card]").forEach(b=>b.addEventListener("click",()=>flipCard(Number(b.dataset.card))));$("#memoryHome").addEventListener("click",closeModal);$("#memoryAgain").addEventListener("click",startMemory)}
-function flipCard(i){const m=memoryState,c=m.deck[i];if(m.lock||c.open||c.matched)return;c.open=true;m.opened.push(c);renderMemory();if(m.opened.length===2){m.moves++;m.lock=true;let [a,b]=m.opened;if(a.v===b.v){a.matched=b.matched=true;m.matched++;m.opened=[];m.lock=false;points+=10;stars+=1;save();if(m.matched===6){progress.memory=(progress.memory||0)+1;setTimeout(()=>{confetti(30);$("#playArea").innerHTML=`<div class="result"><div class="result-emoji">🧠</div><h2>Hafıza ustasısın!</h2><p>${m.moves} hamlede tüm eşleşmeleri buldun.</p><div class="result-score">⭐ +6 yıldız · 🏆 +60 puan</div><button class="next" id="memDone">Harika! 🎉</button></div>`;$("#memDone").addEventListener("click",closeModal)},300);return}}else{setTimeout(()=>{a.open=b.open=false;m.opened=[];m.lock=false;renderMemory()},750)}setTimeout(()=>{if($("#memoryFeedback"))$("#memoryFeedback").textContent=a.v===b.v?"Eşleşme bulundu! ✨":"Bir kez daha dene! 💜"},20)}}
-function confetti(n){const em=["⭐","✨","💖","🌈","🎉","🌸","🦋"];for(let i=0;i<n;i++){let e=document.createElement("span");e.className="confetti";e.textContent=em[rand(em.length)];e.style.left=rand(100)+"vw";e.style.top="-30px";e.style.animationDelay=(Math.random()*.4)+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),2100)}}
-document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderGames(b.dataset.filter)}));
-function startAmbient(){if(bgOn)return;try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;bgAudio=new AC();if(bgAudio.state==="suspended")bgAudio.resume();const master=bgAudio.createGain();master.gain.value=.035;master.connect(bgAudio.destination);const notes=[261.63,329.63,392,329.63,293.66,349.23,440,349.23];let index=0;const play=()=>{if(!bgOn||!bgAudio)return;const osc=bgAudio.createOscillator(),gain=bgAudio.createGain();osc.type="sine";osc.frequency.value=notes[index++%notes.length];gain.gain.setValueAtTime(.0001,bgAudio.currentTime);gain.gain.exponentialRampToValueAtTime(.32,bgAudio.currentTime+.08);gain.gain.exponentialRampToValueAtTime(.0001,bgAudio.currentTime+1.1);osc.connect(gain);gain.connect(master);osc.start();osc.stop(bgAudio.currentTime+1.15)};play();bgTimer=setInterval(play,1250);bgOn=true;$("#soundToggle").textContent="🔇 Sesi kapat";$("#soundToggle").setAttribute("aria-pressed","true")}catch(e){$("#soundToggle").textContent="🎵 Ses açılamadı"}}
-function stopAmbient(){bgOn=false;if(bgTimer)clearInterval(bgTimer);bgTimer=null;if(bgAudio){bgAudio.close().catch(()=>{});bgAudio=null}$("#soundToggle").textContent="🎵 Sesi aç";$("#soundToggle").setAttribute("aria-pressed","false")}
+function makeQuestions(id,count=10){
+ if(id==="animals"){
+  return shuffle(animals).map(a=>({q:"Bu hayvanı tanıyor musun?",big:a.emoji,a:a.name,opts:shuffle([a.name,...shuffle(animals.filter(x=>x.name!==a.name)).slice(0,3).map(x=>x.name)]),soundFile:a.file,soundText:a.sound}));
+ }
+ return Array.from({length:count},()=>makeQuestion(id));
+}
+function startGame(id){
+ currentGame=gamesList.find(g=>g.id===id);if(!currentGame)return;
+ qIndex=0;correctCount=0;sessionPoints=0;sessionStars=0;answered=false;
+ $("#overlay").classList.add("show");
+ $("#modalTitle").textContent=currentGame.emoji+" "+currentGame.name;
+ $("#modalSubtitle").textContent="Hazır mısın minik kaşif? 🌟";
+ if(id==="memory"){startMemory();return}
+ questions=makeQuestions(id);
+ renderQuestion();
+}
+function renderQuestion(){
+ const q=questions[qIndex];answered=false;
+ $("#playArea").innerHTML=`
+ <div class="question-count"><span>Soru ${qIndex+1} / ${questions.length}</span><span>⭐ ${sessionStars}</span></div>
+ <div class="qbar"><span style="width:${((qIndex)/questions.length)*100}%"></span></div>
+ <div class="question">${q.q}<span class="big">${q.big||""}</span></div>
+ <div class="answers">${q.opts.map((o,i)=>`<button class="answer" data-answer="${i}">${o}</button>`).join("")}</div>
+ <div class="feedback" id="feedback" aria-live="polite"></div>
+ <div class="modal-actions"><button class="secondary" id="exitGame">🚪 Çık</button><button class="next" id="nextQuestion" disabled>${qIndex===questions.length-1?"Sonucu gör 🎉":"Sonraki soru →"}</button></div>`;
+ document.querySelectorAll("[data-answer]").forEach((b,i)=>b.addEventListener("click",()=>chooseAnswer(i)));
+ $("#nextQuestion").addEventListener("click",nextQuestion);
+ $("#exitGame").addEventListener("click",closeGame);
+ if(q.soundFile){const sound=document.createElement("button");sound.className="secondary";sound.textContent="🔊 Hayvan sesini dinle";sound.style.marginTop="10px";sound.onclick=()=>playAnimalSound(q.soundFile,q.soundText);$("#playArea").insertBefore(sound,$("#playArea").querySelector(".feedback"))}
+}
+  function chooseAnswer(i){
+ if(answered)return;
+ answered=true;
+ const q=questions[qIndex];
+ const buttons=[...document.querySelectorAll("[data-answer]")];
+ const selected=buttons[i];
+ const correctIndex=q.opts.indexOf(q.a);
+ buttons.forEach((b,j)=>{
+  b.disabled=true;
+  if(j===correctIndex)b.classList.add("correct");
+ });
+ if(i===correctIndex){
+  correctCount++;
+  sessionPoints+=10;
+  sessionStars++;
+  points+=10;
+  stars++;
+  $("#feedback").textContent="Harika! Doğru cevap! ⭐";
+  $("#feedback").style.color="#169b70";
+  confetti(8);
+  save();
+ }else{
+  selected.classList.add("wrong");
+  $("#feedback").textContent="Canın sağ olsun, doğru cevabı öğrenmiş oldun! 💜";
+ }
+ $("#nextQuestion").disabled=false;
+}
+function nextQuestion(){
+ if(!answered)return;
+ qIndex++;
+ if(qIndex>=questions.length){
+  finishQuiz();
+ }else{
+  renderQuestion();
+ }
+}
+function finishQuiz(){
+ if(currentGame){
+  const id=currentGame.id;
+  progress[id]=(progress[id]||0)+1;
+  save();
+ }
+ const total=questions.length;
+ const percent=Math.round(correctCount/total*100);
+ const emoji=percent>=80?"🏆":percent>=50?"🌈":"🌱";
+ $("#playArea").innerHTML=`
+ <div class="result">
+  <div class="result-emoji">${emoji}</div>
+  <h2>${percent>=80?"Muhteşem iş çıkardın!":percent>=50?"Çok güzel ilerliyorsun!":"Denemeye devam!"}</h2>
+  <p>${total} sorudan ${correctCount} tanesini doğru cevapladın. Her oyunda yeni şeyler öğreniyorsun!</p>
+  <div class="result-score">⭐ Bu tur: ${sessionStars} yıldız · 🏆 ${sessionPoints} puan</div>
+  <br><button class="next" id="finishButton">Harika! 🎉</button>
+ </div>`;
+ $("#finishButton").addEventListener("click",closeGame);
+ if(percent>=50)confetti(25);
+}
+function closeGame(){
+ $("#overlay").classList.remove("show");
+ currentGame=null;
+ memoryState=null;
+}
+function closeModal(){closeGame()}
+$("#closeModal").addEventListener("click",closeGame);
+$("#overlay").addEventListener("click",e=>{
+ if(e.target===$("#overlay"))closeGame();
+});
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape")closeGame();
+});
+function playAnimalSound(file,text){
+ const audio=new Audio("sounds/"+file);
+ audio.play().catch(()=>{
+  $("#feedback").textContent=text+" (Ses dosyası bulunamadıysa hayvanın sesini taklit edebilirsin!)";
+ });
+}
+function startMemory(){
+ currentGame=gamesList.find(g=>g.id==="memory");
+ $("#overlay").classList.add("show");
+ $("#modalTitle").textContent="🧠 Hafıza Ormanı";
+ $("#modalSubtitle").textContent="Eşleşen kartları bul!";
+ const emojis=["🐱","🐶","🦊","🐸","🦁","🐼"];
+ memoryState={
+  deck:shuffle([...emojis,...emojis]).map((v,i)=>({v,id:i,open:false,matched:false})),
+  opened:[],matched:0,moves:0,lock:false
+ };
+ renderMemory();
+}
+function renderMemory(){
+ const m=memoryState;
+ if(!m)return;
+ $("#playArea").innerHTML=`
+  <div class="question-count"><span>Hamle: ${m.moves}</span><span>⭐ Her eşleşme +1 yıldız</span></div>
+  <div class="memory-grid">
+   ${m.deck.map((c,i)=>`<button class="memory-card ${c.open?"open":""} ${c.matched?"matched":""}" data-memory="${i}" aria-label="Hafıza kartı">${c.open||c.matched?c.v:"?"}</button>`).join("")}
+  </div>
+  <div class="feedback" id="memoryFeedback">Aynı iki resmi bul! 💖</div>
+  <div class="modal-actions"><button class="secondary" id="memoryExit">🏡 Çık</button></div>`;
+ document.querySelectorAll("[data-memory]").forEach(b=>b.addEventListener("click",()=>flipMemory(Number(b.dataset.memory))));
+ $("#memoryExit").addEventListener("click",closeGame);
+}
+function flipMemory(i){
+ const m=memoryState,c=m.deck[i];
+ if(m.lock||c.open||c.matched)return;
+ c.open=true;
+ m.opened.push(c);
+ renderMemory();
+ if(m.opened.length===2){
+  m.moves++;
+  m.lock=true;
+  const [a,b]=m.opened;
+  if(a.v===b.v){
+   a.matched=b.matched=true;
+   m.matched++;
+   m.opened=[];
+   m.lock=false;
+   points+=10;
+   stars++;
+   save();
+   if(m.matched===6){
+    progress.memory=(progress.memory||0)+1;
+    save();
+    setTimeout(()=>{
+     confetti(30);
+     $("#playArea").innerHTML=`
+      <div class="result">
+       <div class="result-emoji">🧠</div>
+       <h2>Hafıza ustasısın!</h2>
+       <p>${m.moves} hamlede tüm eşleşmeleri buldun.</p>
+       <div class="result-score">⭐ +6 yıldız · 🏆 +60 puan</div>
+       <br><button class="next" id="memDone">Harika! 🎉</button>
+      </div>`;
+     $("#memDone").addEventListener("click",closeGame);
+    },300);
+    return;
+   }
+   renderMemory();
+  }else{
+   $("#memoryFeedback").textContent="Bir kez daha dene! 💜";
+   setTimeout(()=>{
+    a.open=b.open=false;
+    m.opened=[];
+    m.lock=false;
+    renderMemory();
+   },750);
+  }
+ }
+}
+function confetti(n){
+ const em=["⭐","✨","💖","🌈","🎉","🌸","🦋"];
+ for(let i=0;i<n;i++){
+  const e=document.createElement("span");
+  e.className="confetti";
+  e.textContent=em[rand(em.length)];
+  e.style.left=rand(100)+"vw";
+  e.style.top="-30px";
+  e.style.animationDelay=(Math.random()*.4)+"s";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),2100);
+ }
+}
+document.querySelectorAll("[data-filter]").forEach(b=>{
+ b.addEventListener("click",()=>{
+  document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));
+  renderGames(b.dataset.filter);
+ });
+});
+function startAmbient(){
+ if(bgOn)return;
+ try{
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC)return;
+  bgAudio=new AC();
+  if(bgAudio.state==="suspended")bgAudio.resume();
+  const master=bgAudio.createGain();
+  master.gain.value=.035;
+  master.connect(bgAudio.destination);
+  const notes=[261.63,329.63,392,329.63,293.66,349.23,440,349.23];
+  let index=0;
+  const play=()=>{
+   if(!bgOn||!bgAudio)return;
+   const osc=bgAudio.createOscillator(),gain=bgAudio.createGain();
+   osc.type="sine";
+   osc.frequency.value=notes[index++%notes.length];
+   gain.gain.setValueAtTime(.0001,bgAudio.currentTime);
+   gain.gain.exponentialRampToValueAtTime(.32,bgAudio.currentTime+.08);
+   gain.gain.exponentialRampToValueAtTime(.0001,bgAudio.currentTime+1.1);
+   osc.connect(gain);
+   gain.connect(master);
+   osc.start();
+   osc.stop(bgAudio.currentTime+1.15);
+  };
+  bgOn=true;
+  play();
+  bgTimer=setInterval(play,1250);
+  $("#soundToggle").textContent="🔇 Sesi kapat";
+  $("#soundToggle").setAttribute("aria-pressed","true");
+ }catch(e){
+  $("#soundToggle").textContent="🎵 Ses açılamadı";
+ }
+}
+function stopAmbient(){
+ bgOn=false;
+ if(bgTimer)clearInterval(bgTimer);
+ bgTimer=null;
+ if(bgAudio){bgAudio.close().catch(()=>{});bgAudio=null}
+ $("#soundToggle").textContent="🎵 Sesi aç";
+ $("#soundToggle").setAttribute("aria-pressed","false");
+}
 $("#soundToggle").addEventListener("click",()=>bgOn?stopAmbient():startAmbient());
-if("serviceWorker"in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}
-renderGames();renderStats();
+if("serviceWorker" in navigator && location.protocol!=="file:"){
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+}
+renderGames();
+renderStats();
 </script>
 </body>
 </html>
